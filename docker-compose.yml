@@ -1,37 +1,34 @@
 version: '3.8'
+
 services:
   config-server:
-    container_name: config-server
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: springcloud/spring-cloud-config-server
     ports:
       - "8888:8888"
+    environment:
+      - SPRING_CLOUD_CONFIG_SERVER_GIT_URI=https://github.com/davidjmc/config-server
     volumes:
       - ./config-repo:/config-repo
-    environment:
-      - SPRING_CLOUD_CONFIG_SERVER_GIT_URI=https://github.com/davidjmc/config-server.git
-      - SPRING_CLOUD_CONFIG_SERVER_GIT_SEARCH_PATHS=config-repo
 
-  mongo:
+  mongodb:
     image: mongo:latest
     container_name: mongodb
     ports:
       - "27017:27017"
     volumes:
       - mongodb-data:/data/db
-      - ./backend/init-db:/docker-entrypoint-initdb.d
 
   node-api:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
+    build: ./backend/node-api
     container_name: node-api
+    environment:
+      - MONGODB_URL=mongodb://mongodb:27017  # Link para o serviço MongoDB no Docker
+      - DB_NAME=meus_produtos
+    depends_on:
+      - mongodb
+      - config-server
     ports:
       - "3000:3000"
-    depends_on:
-      - config-server
-      - mongo
 
 volumes:
   mongodb-data:
