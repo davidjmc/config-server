@@ -11,4 +11,6 @@ COPY . .
 
 EXPOSE 3000
 
-CMD ["npm", "start"]
+#CMD ["npm", "start"]
+# Comando pra rodar a API
+CMD ["node", "index.js"]

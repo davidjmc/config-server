@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Produtos</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    h1 { color: #333; }
+    #produtos { margin-top: 20px; }
+    .produto { background: #eee; padding: 10px; margin-bottom: 10px; border-radius: 5px; }
+  </style>
+</head>
+<body>
+  <h1>Lista de Produtos</h1>
+  <div id="produtos">Carregando...</div>
+
+  <script>
+    fetch('http://localhost:3000/produtos')
+      .then(response => response.json())
+      .then(data => {
+        const div = document.getElementById('produtos');
+        div.innerHTML = '';
+
+        if (data.length === 0) {
+          div.innerHTML = '<p>Nenhum produto encontrado.</p>';
+        } else {
+          data.forEach(p => {
+            const el = document.createElement('div');
+            el.className = 'produto';
+            el.innerHTML = `<strong>${p.nome}</strong> - R$ ${p.preco.toFixed(2)}`;
+            div.appendChild(el);
+          });
+        }
+      })
+      .catch(err => {
+        document.getElementById('produtos').innerHTML = 'Erro ao carregar produtos.';
+        console.error(err);
+      });
+  </script>
+</body>
+</html>

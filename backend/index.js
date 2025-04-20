@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const axios = require('axios');
+const Produto = require('./models/Produto');
 
 // Variáveis de ambiente para conexão com MongoDB
 const mongodbUrl = process.env.MONGODB_URL || 'mongodb://mongodb:27017';  // URL do MongoDB
@@ -17,8 +18,13 @@ mongoose.connect(mongodbUrl, { dbName: dbName })
   });
 
 // API de exemplo
-app.get('/produtos', (req, res) => {
-  res.json({ message: 'Produtos vindos do MongoDB!' });
+app.get('/produtos', async (req, res) => {
+  try {
+    const produtos = await Produto.find();
+    res.json(produtos);
+  } catch (err) {
+    res.status(500).json({ erro: 'Erro ao buscar produtos' });
+  }
 });
 
 app.listen(3000, () => {
