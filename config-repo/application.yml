@@ -1,0 +1,9 @@
+minhaapp:
+  mensagem: "Olá do Spring Cloud Config!"
+  ambiente: "dev"
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/meubanco
+    username: usuario
+    password: senha123

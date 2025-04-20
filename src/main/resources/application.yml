@@ -6,8 +6,6 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/seu-usuario/seu-repo-config
-          # Aqui você coloca o repositório Git com as configurações
-          # Exemplo: 
-          # uri: https://github.com/usuario/config-repo.git
-          # Não precisa de credenciais aqui, pode ser um repositório público
+          uri: https://github.com/davidjmc/config-server
+          search-paths: config-repo
+          clone-on-start: true
