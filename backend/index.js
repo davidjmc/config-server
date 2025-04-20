@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const axios = require('axios');
 const Produto = require('./models/Produto');
+const cors = require('cors');
+app.use(cors());
 
 // Variáveis de ambiente para conexão com MongoDB
 const mongodbUrl = process.env.MONGODB_URL || 'mongodb://mongodb:27017';  // URL do MongoDB
@@ -27,6 +29,6 @@ app.get('/produtos', async (req, res) => {
   }
 });
 
-app.listen(3000, () => {
-  console.log('API rodando em http://localhost:3000');
+app.listen(3000, '0.0.0.0', () => {
+  console.log('API rodando em http://0.0.0.0:3000');
 });

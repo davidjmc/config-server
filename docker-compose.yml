@@ -33,15 +33,16 @@ services:
       - config-server
       - mongo
 
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      - node-api
+
 volumes:
   mongodb-data:
 
-frontend:
-  build:
-    context: ./frontend
-    dockerfile: Dockerfile
-  ports:
-    - "8080:80"
-  depends_on:
-    - node-api
 
